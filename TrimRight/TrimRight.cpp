@@ -1,13 +1,14 @@
 ﻿#include <iostream>
 #include <cstring>
 #include <string>
+#include <list>
 
 void TrimRight(char* s) {
 
+    // old school style
+
     long int size = strlen(s);
     const char gap = ' ';
-
-    std::cout << "Длина исходной строки: " << size << std::endl;
 
     for (long int i = strlen(s) - 1; i >= 0; i--) {
         if (s[i] == gap) {
@@ -46,6 +47,38 @@ void TrimRight(char* s) {
 
 }
 
+void TrimRightNew(char* s) {
+
+    const char gap = ' ';
+    int count = 0;
+
+    std::list<char> sl;
+
+    for (long int i = 0; i < strlen(s); i++) {
+        sl.push_back(s[i]);
+    }
+
+    std::list<char>::reverse_iterator itr;
+
+    while (*sl.rbegin() == gap)
+    {
+        sl.pop_back();
+        count++;
+    }
+
+    std::cout << "Строка без пробелов справа:" << std::endl;
+
+    for (const auto& i : sl) {
+        std::cout << i;
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "\nЧисло удалённых пробелов: " << count << std::endl;
+
+    std::cout << std::endl;
+}
+
 int main(int argc, char** argv)
 {
     setlocale(LC_ALL, "Russian");
@@ -62,7 +95,9 @@ int main(int argc, char** argv)
 
     std::cout << std::endl;
 
-    TrimRight(s);
+    //TrimRight(s);
+
+    TrimRightNew(s);
 
     delete[] s;
 
